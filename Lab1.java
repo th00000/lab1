@@ -1,12 +1,14 @@
 package test1;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
-class Polynomial //多项式
+/*
+多项式
+*/
+class Polynomial 
 {
 	String old; //原始多项式
 	int va; //返回纯数字类型的值
-	int appear[]=new int[30]; //指数
+	int index[]=new int[30]; //指数
 	int coe; //系数
 	boolean flag,use,out; //合法、合并、输出
 	
@@ -17,7 +19,7 @@ class Polynomial //多项式
 		flag=true;
 		use=false;
 		out=false;
-		for (int i=0;i<=26;i++) appear[i]=0;
+		for (int i=0;i<=26;i++) index[i]=0;
 		return ;
 	}
 	
@@ -45,14 +47,14 @@ class Polynomial //多项式
 		
 		for (int i=0;i<26;i++)
 		{
-			if (now.va[i]<0) ans[i]=appear[i];
-			else if(now.kind==1) {ncoe*=pow(now.va[i],appear[i]);ans[i]=0;}
-			else if(appear[i]>0) {ncoe*=appear[i];ans[i]=appear[i]-1;}
+			if (now.va[i]<0) ans[i]=index[i];
+			else if(now.kind==1) {ncoe*=pow(now.va[i],index[i]);ans[i]=0;}
+			else if(index[i]>0) {ncoe*=index[i];ans[i]=index[i]-1;}
 			if (ans[i]>0) pos=true;
 		}
 		
 		if (!pos) {va=ncoe;return;}
-		if (now.kind==2 && appear[now.de]==0) {va=0;return ;}
+		if (now.kind==2 && index[now.de]==0) {va=0;return ;}
 		if (be) System.out.print("+");
 		if (ncoe>1) {System.out.print(ncoe);st=1;}
 		for (int i=0;i<26;i++)
@@ -111,7 +113,7 @@ class Polynomial //多项式
 		va=ts[0].charAt(be)-'a';
 		if (l>1) add=Stn(ts[1]);
 		else add=1;
-		if (va>=0 && va<=25) appear[va]+=add; else flag=false;
+		if (va>=0 && va<=25) index[va]+=add; else flag=false;
 		return ;
 	}
 }
@@ -216,7 +218,7 @@ public class test1 {
 	
 	static boolean Judge(int de) //判断被求导的对象是否存在于多项式中
 	{
-		for (int i=0;i<sum;i++) if (p[i].appear[de]>0) return true;
+		for (int i=0;i<sum;i++) if (p[i].index[de]>0) return true;
 		return false;
 	}
 	
@@ -232,7 +234,7 @@ public class test1 {
 	static boolean Equal(int x,int y) //判断合并项
 	{
 		for (int i=0;i<25;i++)
-			if (p[x].appear[i]!=p[y].appear[i]) return false;
+			if (p[x].index[i]!=p[y].index[i]) return false;
 		return true;
 	}
 	
@@ -310,7 +312,7 @@ public class test1 {
 			System.out.printf("%d ms",endtime-starttime);
 			System.out.println();
 		}
-		
+		in.close;
 	}
 	
 	static void Build()
