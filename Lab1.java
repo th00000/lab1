@@ -1,20 +1,22 @@
 package test1;
 import java.text.SimpleDateFormat;
 import java.util.*;
-/*
-多项式
-*/
-class Polynomial 
-{
+/**
+ * @author pengzehao&&donghaoyang 
+ */
+ //多项式类
+class Polynomial {
 	String old; //原始多项式
 	int va; //返回纯数字类型的值
-	int index[]=new int[30]; //指数
+	public static final int MAX = 30;
+	public int index[]=new int[MAX]; //指数
 	int coe; //系数
 	boolean flag,use,out; //合法、合并、输出
-	
-	public void Clear() //初始化
+	public Polynomial(){	
+	}
+	public void clear() //初始化
 	{
-		va=0; 
+		va = 0; 
 		coe=1;
 		flag=true;
 		use=false;
@@ -64,7 +66,7 @@ class Polynomial
 				c=(char)('a'+i);
 				if (st==1) System.out.print("*");
 				st=1;
-				System.out.print(c);
+				System.out.println(c);
 				if (ans[i]>1)	System.out.print("^"+ans[i]);
 			}
 		}
@@ -72,7 +74,7 @@ class Polynomial
 		return ;
 	}
 	
-	private int Stn(String s) //将字符串转换成数字并检验合法性，逐位判断
+	private int stn(String s) //将字符串转换成数字并检验合法性，逐位判断
 	{
 		int tmp=0,l=s.length();
 		char c;
@@ -97,9 +99,10 @@ class Polynomial
 	{
 		String ts[]=s.split("\\^");
 		if (ts.length>2) flag=false;
-		int x,y;
-		x=Stn(ts[0]);
-		if (ts.length>1) y=Stn(ts[1]);
+		int x;
+		int y;
+		x=stn(ts[0]);
+		if (ts.length>1) y=stn(ts[1]);
 		else y=1;
 		return pow(x,y);
 	}
@@ -111,7 +114,7 @@ class Polynomial
 		while (ts[0].charAt(be)==' ') be++;
 		if (ts[0].length()-be>1 || l>2) flag=false;
 		va=ts[0].charAt(be)-'a';
-		if (l>1) add=Stn(ts[1]);
+		if (l>1) add=stn(ts[1]);
 		else add=1;
 		if (va>=0 && va<=25) index[va]+=add; else flag=false;
 		return ;
@@ -137,7 +140,7 @@ class Command //指令
 	{
 		String ts[]=s.split(" ");
 		kind=1;
-		int l=ts.length;
+		final int l=ts.length;
 		if (!ts[0].equals("!simplify")) {flag=false;return ;}
 		for (int i=1;i<l;i++)	flag=Tr(ts[i]);
 		
@@ -170,7 +173,7 @@ class Command //指令
 		char c;
 		if ((l!=2) || (!ts[0].equals("!d/d"))) {flag=false;return ;}
 		c=ts[1].charAt(0);
-		if (c>='a' || c<='z') {va[c-'a']=1;de=c-'a';} else flag=false;
+		if (c>='a' && c<='z') {va[c-'a']=1;de=c-'a';} else flag=false;
 		if (ts[1].length()>1) flag=false;
 		return ;
 	}
@@ -178,14 +181,11 @@ class Command //指令
 
 public class test1 {
 	//= - =
-	static Polynomial p[]=new Polynomial[1000];
+	public static final int MaxPoly = 500;
+	static Polynomial p[]=new Polynomial[MaxPoly];
 	static Command co;
 	static int sum; //项式数
-	static void Print_e() //输出错误信息
-	{
-		System.out.println("Error");
-		return ;
-	}
+	
 	
 	static void Print_p(Command now) //输出多项式
 	{
@@ -212,7 +212,7 @@ public class test1 {
 		co.Clear();
 		co.Sim(s);
 		if (co.flag) Print_p(co);
-		else Print_e();
+		else System.out.println("Error");
 		return ;
 	}
 	
@@ -227,7 +227,7 @@ public class test1 {
 		co.Clear();
 		co.Der(s);
 		if (co.flag && Judge(co.de)) Print_p(co);
-		else Print_e();
+		else System.out.println("Error");
 		return ;
 	}
 	
@@ -245,7 +245,7 @@ public class test1 {
 		sum=ts.length;
 		for (int i=0;i<sum;i++)
 		{
-			p[i].Clear();
+			p[i].clear();
 			p[i].old=ts[i];
 			p[i].Merge(ts[i]);
 			flag=flag&p[i].flag;
@@ -285,7 +285,7 @@ public class test1 {
 		while (true)
 		{
 			s=in.nextLine();
-			s.toLowerCase();
+			s=s.toLowerCase();
 			long starttime = System.currentTimeMillis();
 			//System.out.println("Start time:");
 			//Print_time();
@@ -293,7 +293,7 @@ public class test1 {
 			if (s=="End") break;
 			if (s.charAt(0)=='!')
 			{
-				if (s.length()==1 || !flag)  Print_e();
+				if (s.length()==1 || !flag)  System.out.println("Error");
 				else if (s.charAt(1)=='s')  Simplify(s);
 				else  Derivative(s);
 			}
@@ -302,7 +302,7 @@ public class test1 {
 				flag=Expression(s);
 				co.Clear();
 				if (flag) Print_p(co);
-				else  Print_e();
+				else  System.out.println("Error");
 			}
 			long endtime = System.currentTimeMillis();
 			//System.out.println("End time:");
@@ -312,7 +312,7 @@ public class test1 {
 			System.out.printf("%d ms",endtime-starttime);
 			System.out.println();
 		}
-		in.close;
+		in.close();
 	}
 	
 	static void Build()
