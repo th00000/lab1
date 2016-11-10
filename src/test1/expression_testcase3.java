@@ -11,7 +11,6 @@ public class expression_testcase3 extends TestCase{
 		test1 ce=new test1();
 		ce.Build();
 		boolean ans=ce.Expression("%+123");
-		System.out.println(ans);
 		assertEquals(false, ans);
 	}
 }

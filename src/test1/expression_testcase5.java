@@ -11,7 +11,6 @@ public class expression_testcase5 extends TestCase{
 		test1 ce=new test1();
 		ce.Build();
 		boolean ans=ce.Expression("2^x+x^2");
-		System.out.println(ans);
 		assertEquals(false, ans);
 	}
 }
