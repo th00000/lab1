@@ -244,6 +244,7 @@ public class test1 {
 		for (int i=0;i<sum;i++)
 		{
 			p[i].Clear();
+			//System.out.println("yes");
 			p[i].old=ts[i];
 			p[i].Merge(ts[i]);
 			flag=flag&p[i].flag;
