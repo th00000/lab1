@@ -286,8 +286,6 @@ public class test1 {
 			s=in.nextLine();
 			s.toLowerCase();
 			long starttime = System.currentTimeMillis();
-			//System.out.println("Start time:");
-			//Print_time();
 			if (s.length()==0) continue;
 			if (s=="End") break;
 			if (s.charAt(0)=='!')
@@ -304,9 +302,6 @@ public class test1 {
 				else  Print_e();
 			}
 			long endtime = System.currentTimeMillis();
-			//System.out.println("End time:");
-			//Print_time();
-			
 			System.out.print("Run time:");
 			System.out.printf("%d ms",endtime-starttime);
 			System.out.println();
